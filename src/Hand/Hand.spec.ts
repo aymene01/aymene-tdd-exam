@@ -25,7 +25,7 @@ describe('Hand', () => {
       new Card(Rank.QUEEN, Suit.HEARTS),
       new Card(Rank.JACK, Suit.HEARTS),
     ];
-    
+
     expect(() => new Hand(cards)).toThrow('A hand must contain exactly 5 cards');
   });
 
@@ -37,9 +37,9 @@ describe('Hand', () => {
       new Card(Rank.JACK, Suit.HEARTS),
       new Card(Rank.TEN, Suit.HEARTS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.ROYAL_FLUSH);
   });
 });
