@@ -239,24 +239,131 @@ describe('Hand', () => {
     expect(hand.getHandType()).toBe(HandType.HIGH_CARD);
   });
 
-  it('should compare hands correctly', () => {
-    const hand1 = new Hand([
-      new Card(Rank.ACE, Suit.HEARTS),
-      new Card(Rank.KING, Suit.HEARTS),
-      new Card(Rank.QUEEN, Suit.HEARTS),
-      new Card(Rank.JACK, Suit.HEARTS),
-      new Card(Rank.TEN, Suit.HEARTS),
-    ]);
+  describe('compareTo', () => {
+    it('should rank a royal flush higher than a straight flush', () => {
+      const royalFlush = new Hand([
+        new Card(Rank.ACE, Suit.HEARTS),
+        new Card(Rank.KING, Suit.HEARTS),
+        new Card(Rank.QUEEN, Suit.HEARTS),
+        new Card(Rank.JACK, Suit.HEARTS),
+        new Card(Rank.TEN, Suit.HEARTS),
+      ]);
 
-    const hand2 = new Hand([
-      new Card(Rank.NINE, Suit.SPADES),
-      new Card(Rank.EIGHT, Suit.SPADES),
-      new Card(Rank.SEVEN, Suit.SPADES),
-      new Card(Rank.SIX, Suit.SPADES),
-      new Card(Rank.FIVE, Suit.SPADES),
-    ]);
+      const straightFlush = new Hand([
+        new Card(Rank.NINE, Suit.SPADES),
+        new Card(Rank.EIGHT, Suit.SPADES),
+        new Card(Rank.SEVEN, Suit.SPADES),
+        new Card(Rank.SIX, Suit.SPADES),
+        new Card(Rank.FIVE, Suit.SPADES),
+      ]);
 
-    expect(hand1.compareTo(hand2)).toBe(1);
-    expect(hand2.compareTo(hand1)).toBe(-1);
+      expect(royalFlush.compareTo(straightFlush)).toBeGreaterThan(0);
+      expect(straightFlush.compareTo(royalFlush)).toBeLessThan(0);
+    });
+
+    it('should compare hands correctly', () => {
+      const hand1 = new Hand([
+        new Card(Rank.ACE, Suit.HEARTS),
+        new Card(Rank.KING, Suit.HEARTS),
+        new Card(Rank.QUEEN, Suit.HEARTS),
+        new Card(Rank.JACK, Suit.HEARTS),
+        new Card(Rank.TEN, Suit.HEARTS),
+      ]);
+
+      const hand2 = new Hand([
+        new Card(Rank.NINE, Suit.SPADES),
+        new Card(Rank.EIGHT, Suit.SPADES),
+        new Card(Rank.SEVEN, Suit.SPADES),
+        new Card(Rank.SIX, Suit.SPADES),
+        new Card(Rank.FIVE, Suit.SPADES),
+      ]);
+
+      expect(hand1.compareTo(hand2)).toBe(1);
+      expect(hand2.compareTo(hand1)).toBe(-1);
+    });
+
+    it('should rank a higher straight flush over a lower straight flush', () => {
+      const higherStraightFlush = new Hand([
+        new Card(Rank.KING, Suit.HEARTS),
+        new Card(Rank.QUEEN, Suit.HEARTS),
+        new Card(Rank.JACK, Suit.HEARTS),
+        new Card(Rank.TEN, Suit.HEARTS),
+        new Card(Rank.NINE, Suit.HEARTS),
+      ]);
+
+      const lowerStraightFlush = new Hand([
+        new Card(Rank.NINE, Suit.SPADES),
+        new Card(Rank.EIGHT, Suit.SPADES),
+        new Card(Rank.SEVEN, Suit.SPADES),
+        new Card(Rank.SIX, Suit.SPADES),
+        new Card(Rank.FIVE, Suit.SPADES),
+      ]);
+
+      expect(higherStraightFlush.compareTo(lowerStraightFlush)).toBeGreaterThan(0);
+      expect(lowerStraightFlush.compareTo(higherStraightFlush)).toBeLessThan(0);
+    });
+
+    it('should rank a four of a kind higher than a full house', () => {
+      const fourOfAKind = new Hand([
+        new Card(Rank.SEVEN, Suit.HEARTS),
+        new Card(Rank.SEVEN, Suit.DIAMONDS),
+        new Card(Rank.SEVEN, Suit.SPADES),
+        new Card(Rank.SEVEN, Suit.CLUBS),
+        new Card(Rank.NINE, Suit.HEARTS),
+      ]);
+
+      const fullHouse = new Hand([
+        new Card(Rank.TEN, Suit.HEARTS),
+        new Card(Rank.TEN, Suit.DIAMONDS),
+        new Card(Rank.TEN, Suit.SPADES),
+        new Card(Rank.FOUR, Suit.CLUBS),
+        new Card(Rank.FOUR, Suit.HEARTS),
+      ]);
+
+      expect(fourOfAKind.compareTo(fullHouse)).toBeGreaterThan(0);
+      expect(fullHouse.compareTo(fourOfAKind)).toBeLessThan(0);
+    });
+
+    it('should rank a higher four of a kind over a lower four of a kind', () => {
+      const higherFourOfAKind = new Hand([
+        new Card(Rank.EIGHT, Suit.HEARTS),
+        new Card(Rank.EIGHT, Suit.DIAMONDS),
+        new Card(Rank.EIGHT, Suit.SPADES),
+        new Card(Rank.EIGHT, Suit.CLUBS),
+        new Card(Rank.NINE, Suit.HEARTS),
+      ]);
+
+      const lowerFourOfAKind = new Hand([
+        new Card(Rank.SEVEN, Suit.HEARTS),
+        new Card(Rank.SEVEN, Suit.DIAMONDS),
+        new Card(Rank.SEVEN, Suit.SPADES),
+        new Card(Rank.SEVEN, Suit.CLUBS),
+        new Card(Rank.NINE, Suit.HEARTS),
+      ]);
+
+      expect(higherFourOfAKind.compareTo(lowerFourOfAKind)).toBeGreaterThan(0);
+      expect(lowerFourOfAKind.compareTo(higherFourOfAKind)).toBeLessThan(0);
+    });
+
+    it('should rank a higher full house over a lower full house by comparing the three of a kind', () => {
+      const higherFullHouse = new Hand([
+        new Card(Rank.JACK, Suit.HEARTS),
+        new Card(Rank.JACK, Suit.DIAMONDS),
+        new Card(Rank.JACK, Suit.SPADES),
+        new Card(Rank.FOUR, Suit.CLUBS),
+        new Card(Rank.FOUR, Suit.HEARTS),
+      ]);
+
+      const lowerFullHouse = new Hand([
+        new Card(Rank.TEN, Suit.HEARTS),
+        new Card(Rank.TEN, Suit.DIAMONDS),
+        new Card(Rank.TEN, Suit.SPADES),
+        new Card(Rank.KING, Suit.CLUBS),
+        new Card(Rank.KING, Suit.HEARTS),
+      ]);
+
+      expect(higherFullHouse.compareTo(lowerFullHouse)).toBeGreaterThan(0);
+      expect(lowerFullHouse.compareTo(higherFullHouse)).toBeLessThan(0);
+    });
   });
 });
