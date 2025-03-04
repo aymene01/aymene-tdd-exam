@@ -26,4 +26,24 @@ export class Card {
     public readonly rank: Rank,
     public readonly suit: Suit,
   ) {}
+  
+  toString(): string {
+    const rankSymbol = this.getRankSymbol();
+    return `${rankSymbol}${this.suit}`;
+  }
+
+  private getRankSymbol(): string {
+    switch (this.rank) {
+      case Rank.ACE:
+        return 'A';
+      case Rank.KING:
+        return 'K';
+      case Rank.QUEEN:
+        return 'Q';
+      case Rank.JACK:
+        return 'J';
+      default:
+        return this.rank.toString();
+    }
+  }
 }

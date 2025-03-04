@@ -8,4 +8,10 @@ describe('Card', () => {
     expect(card.rank).toBe(Rank.ACE);
     expect(card.suit).toBe(Suit.HEARTS);
   });
+
+  it('should correctly format the card as a string', () => {
+    const card = new Card(Rank.ACE, Suit.HEARTS);
+    
+    expect(card.toString()).toBe('A♥');
+  });
 });
