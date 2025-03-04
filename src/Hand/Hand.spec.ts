@@ -11,9 +11,9 @@ describe('Hand', () => {
       new Card(Rank.JACK, Suit.HEARTS),
       new Card(Rank.TEN, Suit.HEARTS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.cards).toHaveLength(5);
     expect(hand.cards).toEqual(cards);
   });
