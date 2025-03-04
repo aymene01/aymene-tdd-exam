@@ -11,7 +11,10 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
-    "validate": "pnpm format:check && pnpm lint && pnpm type-check && pnpm test"
+    "validate": "pnpm format:check && pnpm lint && pnpm type-check && pnpm test",
+    "changeset": "changeset",
+    "changeset:add": "changeset add",
+    "changeset:status": "changeset status"
   },
   "keywords": [],
   "author": "",
