@@ -77,6 +77,32 @@ export class Hand {
     return this.isFlush() && this.isStraight();
   }
 
+  private isFourOfAKind(): boolean {
+    const rankCounts = this.countRanks();
+    for (const rank in rankCounts) {
+      if (rankCounts[rank] === 4) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private isFullHouse(): boolean {
+    const rankCounts = this.countRanks();
+    let hasThree = false;
+    let hasTwo = false;
+
+    for (const rank in rankCounts) {
+      if (rankCounts[rank] === 3) {
+        hasThree = true;
+      } else if (rankCounts[rank] === 2) {
+        hasTwo = true;
+      }
+    }
+
+    return hasThree && hasTwo;
+  }
+
   private isFlush(): boolean {
     const firstSuit = this.cards[0].suit;
     return this.cards.every(card => card.suit === firstSuit);
@@ -100,7 +126,50 @@ export class Hand {
     }
     return true;
   }
-  
+
+  private isThreeOfAKind(): boolean {
+    const rankCounts = this.countRanks();
+
+    if (this.isFullHouse()) {
+      return false;
+    }
+
+    for (const rank in rankCounts) {
+      if (rankCounts[rank] === 3) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private isTwoPair(): boolean {
+    const rankCounts = this.countRanks();
+    let pairCount = 0;
+
+    for (const rank in rankCounts) {
+      if (rankCounts[rank] === 2) {
+        pairCount++;
+      }
+    }
+
+    return pairCount === 2;
+  }
+
+  private isOnePair(): boolean {
+    const rankCounts = this.countRanks();
+
+    if (this.isTwoPair() || this.isThreeOfAKind() || this.isFullHouse() || this.isFourOfAKind()) {
+      return false;
+    }
+
+    for (const rank in rankCounts) {
+      if (rankCounts[rank] === 2) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   // helper function to count the number of cards of each rank
   private countRanks(): Record<number, number> {
     const rankCounts: Record<number, number> = {};
