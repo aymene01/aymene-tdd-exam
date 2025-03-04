@@ -1,7 +1,14 @@
 import { Card } from '../Card';
 
 export class Hand {
-  constructor(public readonly cards: Card[]) {}
+  readonly cards: Card[];
+
+  constructor(cards: Card[]) {
+    if (cards.length !== 5) {
+      throw new Error('A hand must contain exactly 5 cards');
+    }
+    this.cards = [...cards].sort((a, b) => b.rank - a.rank);
+  }
 }
 
 export enum HandType {
