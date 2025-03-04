@@ -26,6 +26,8 @@ const HAND_TYPE_RANKS: Record<HandType, number> = {
   [HandType.ROYAL_FLUSH]: 10,
 };
 
+type RankCount = Record<number, number>;
+
 export class Hand {
   readonly cards: Card[];
 
@@ -37,39 +39,32 @@ export class Hand {
   }
 
   getHandType(): HandType {
-    if (this.isRoyalFlush()) {
-      return HandType.ROYAL_FLUSH;
+    const handCheckers: Array<[() => boolean, HandType]> = [
+      [() => this.isRoyalFlush(), HandType.ROYAL_FLUSH],
+      [() => this.isStraightFlush(), HandType.STRAIGHT_FLUSH],
+      [() => this.isFourOfAKind(), HandType.FOUR_OF_A_KIND],
+      [() => this.isFullHouse(), HandType.FULL_HOUSE],
+      [() => this.isFlush(), HandType.FLUSH],
+      [() => this.isStraight(), HandType.STRAIGHT],
+      [() => this.isThreeOfAKind(), HandType.THREE_OF_A_KIND],
+      [() => this.isTwoPair(), HandType.TWO_PAIR],
+      [() => this.isOnePair(), HandType.ONE_PAIR]
+    ];
+
+    for (const [checkFn, handType] of handCheckers) {
+      if (checkFn()) {
+        return handType;
+      }
     }
-    if (this.isStraightFlush()) {
-      return HandType.STRAIGHT_FLUSH;
-    }
-    if (this.isFourOfAKind()) {
-      return HandType.FOUR_OF_A_KIND;
-    }
-    if (this.isFullHouse()) {
-      return HandType.FULL_HOUSE;
-    }
-    if (this.isFlush()) {
-      return HandType.FLUSH;
-    }
-    if (this.isStraight()) {
-      return HandType.STRAIGHT;
-    }
-    if (this.isThreeOfAKind()) {
-      return HandType.THREE_OF_A_KIND;
-    }
-    if (this.isTwoPair()) {
-      return HandType.TWO_PAIR;
-    }
-    if (this.isOnePair()) {
-      return HandType.ONE_PAIR;
-    }
+
     return HandType.HIGH_CARD;
   }
 
   private isRoyalFlush(): boolean {
     return (
-      this.isStraightFlush() && this.cards[0].rank === Rank.ACE && this.cards[4].rank === Rank.TEN
+      this.isStraightFlush() && 
+      this.cards[0].rank === Rank.ACE && 
+      this.cards[4].rank === Rank.TEN
     );
   }
 
@@ -79,28 +74,13 @@ export class Hand {
 
   private isFourOfAKind(): boolean {
     const rankCounts = this.countRanks();
-    for (const rank in rankCounts) {
-      if (rankCounts[rank] === 4) {
-        return true;
-      }
-    }
-    return false;
+    return Object.values(rankCounts).some(count => count === 4);
   }
 
   private isFullHouse(): boolean {
     const rankCounts = this.countRanks();
-    let hasThree = false;
-    let hasTwo = false;
-
-    for (const rank in rankCounts) {
-      if (rankCounts[rank] === 3) {
-        hasThree = true;
-      } else if (rankCounts[rank] === 2) {
-        hasTwo = true;
-      }
-    }
-
-    return hasThree && hasTwo;
+    const counts = Object.values(rankCounts);
+    return counts.includes(3) && counts.includes(2);
   }
 
   private isFlush(): boolean {
@@ -119,65 +99,43 @@ export class Hand {
       return true;
     }
 
-    for (let i = 1; i < this.cards.length; i++) {
-      if (this.cards[i - 1].rank !== this.cards[i].rank + 1) {
-        return false;
-      }
-    }
-    return true;
+    return this.cards.every((card, index) => 
+      index === 0 || this.cards[index - 1].rank === card.rank + 1
+    );
   }
 
   private isThreeOfAKind(): boolean {
-    const rankCounts = this.countRanks();
-
     if (this.isFullHouse()) {
       return false;
     }
-
-    for (const rank in rankCounts) {
-      if (rankCounts[rank] === 3) {
-        return true;
-      }
-    }
-    return false;
+    
+    const rankCounts = this.countRanks();
+    return Object.values(rankCounts).some(count => count === 3);
   }
 
   private isTwoPair(): boolean {
     const rankCounts = this.countRanks();
-    let pairCount = 0;
-
-    for (const rank in rankCounts) {
-      if (rankCounts[rank] === 2) {
-        pairCount++;
-      }
-    }
-
-    return pairCount === 2;
+    const pairs = Object.values(rankCounts).filter(count => count === 2);
+    return pairs.length === 2;
   }
 
   private isOnePair(): boolean {
-    const rankCounts = this.countRanks();
-
     if (this.isTwoPair() || this.isThreeOfAKind() || this.isFullHouse() || this.isFourOfAKind()) {
       return false;
     }
-
-    for (const rank in rankCounts) {
-      if (rankCounts[rank] === 2) {
-        return true;
-      }
-    }
-    return false;
+    
+    const rankCounts = this.countRanks();
+    return Object.values(rankCounts).some(count => count === 2);
   }
 
-  // helper function to count the number of cards of each rank
-  private countRanks(): Record<number, number> {
-    const rankCounts: Record<number, number> = {};
+  private countRanks(): RankCount {
+    return this.cards.reduce((counts, card) => ({
+      ...counts,
+      [card.rank]: (counts[card.rank] || 0) + 1
+    }), {} as RankCount);
+  }
 
-    for (const card of this.cards) {
-      rankCounts[card.rank] = (rankCounts[card.rank] || 0) + 1;
-    }
-
-    return rankCounts;
+  toString(): string {
+    return this.cards.map(card => card.toString()).join(' ');
   }
 }
