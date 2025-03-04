@@ -11,27 +11,26 @@ jobs:
     name: Setup
     runs-on: ubuntu-latest
     outputs:
-      pnpm-cache-dir: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        pnpm-cache-dir: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-      
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+          
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 9
+        run_install: false
+    
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
   type-check:
