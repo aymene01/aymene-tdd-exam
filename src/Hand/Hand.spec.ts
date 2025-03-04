@@ -259,5 +259,4 @@ describe('Hand', () => {
     expect(hand1.compareTo(hand2)).toBe(1);
     expect(hand2.compareTo(hand1)).toBe(-1);
   });
-  
 });
