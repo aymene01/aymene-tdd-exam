@@ -2,5 +2,5 @@
     "name": "@aymene01/poker-game",
     "version": "0.1.0",
     "license": "MIT",
-    "exports": "./mod.ts"
+    "exports": "./src/index.ts"
   }
