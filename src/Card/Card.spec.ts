@@ -14,4 +14,14 @@ describe('Card', () => {
     
     expect(card.toString()).toBe('A♥');
   });
+
+  it('should compare cards by rank', () => {
+    const aceOfHearts = new Card(Rank.ACE, Suit.HEARTS);
+    const kingOfHearts = new Card(Rank.KING, Suit.HEARTS);
+    const aceOfSpades = new Card(Rank.ACE, Suit.SPADES);
+    
+    expect(aceOfHearts.compareByRank(kingOfHearts)).toBeGreaterThan(0);
+    expect(kingOfHearts.compareByRank(aceOfHearts)).toBeLessThan(0);
+    expect(aceOfHearts.compareByRank(aceOfSpades)).toBe(0);
+  });
 });

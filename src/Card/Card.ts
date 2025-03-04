@@ -32,6 +32,10 @@ export class Card {
     return `${rankSymbol}${this.suit}`;
   }
 
+  compareByRank(other: Card): number {
+    return this.rank - other.rank;
+  }
+
   private getRankSymbol(): string {
     switch (this.rank) {
       case Rank.ACE:
