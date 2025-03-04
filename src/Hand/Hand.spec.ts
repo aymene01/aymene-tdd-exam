@@ -51,9 +51,9 @@ describe('Hand', () => {
       new Card(Rank.SEVEN, Suit.CLUBS),
       new Card(Rank.NINE, Suit.HEARTS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.FOUR_OF_A_KIND);
   });
 
@@ -65,9 +65,9 @@ describe('Hand', () => {
       new Card(Rank.FOUR, Suit.CLUBS),
       new Card(Rank.FOUR, Suit.HEARTS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.FULL_HOUSE);
   });
 
@@ -79,9 +79,9 @@ describe('Hand', () => {
       new Card(Rank.SIX, Suit.CLUBS),
       new Card(Rank.TWO, Suit.CLUBS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.FLUSH);
   });
 
@@ -93,9 +93,9 @@ describe('Hand', () => {
       new Card(Rank.SIX, Suit.DIAMONDS),
       new Card(Rank.FIVE, Suit.HEARTS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.STRAIGHT);
   });
 
@@ -107,9 +107,9 @@ describe('Hand', () => {
       new Card(Rank.KING, Suit.CLUBS),
       new Card(Rank.THREE, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.THREE_OF_A_KIND);
   });
 
@@ -121,9 +121,9 @@ describe('Hand', () => {
       new Card(Rank.FOUR, Suit.HEARTS),
       new Card(Rank.ACE, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.TWO_PAIR);
   });
 
@@ -135,9 +135,9 @@ describe('Hand', () => {
       new Card(Rank.FOUR, Suit.HEARTS),
       new Card(Rank.THREE, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.ONE_PAIR);
   });
 
@@ -149,9 +149,9 @@ describe('Hand', () => {
       new Card(Rank.SEVEN, Suit.HEARTS),
       new Card(Rank.TWO, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.HIGH_CARD);
   });
 
@@ -163,9 +163,9 @@ describe('Hand', () => {
       new Card(Rank.SIX, Suit.CLUBS),
       new Card(Rank.TWO, Suit.CLUBS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.FLUSH);
   });
 
@@ -177,9 +177,9 @@ describe('Hand', () => {
       new Card(Rank.SIX, Suit.DIAMONDS),
       new Card(Rank.FIVE, Suit.HEARTS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.STRAIGHT);
   });
 
@@ -191,9 +191,9 @@ describe('Hand', () => {
       new Card(Rank.KING, Suit.CLUBS),
       new Card(Rank.THREE, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.THREE_OF_A_KIND);
   });
 
@@ -205,9 +205,9 @@ describe('Hand', () => {
       new Card(Rank.FOUR, Suit.HEARTS),
       new Card(Rank.ACE, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.TWO_PAIR);
   });
 
@@ -219,9 +219,9 @@ describe('Hand', () => {
       new Card(Rank.FOUR, Suit.HEARTS),
       new Card(Rank.THREE, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.ONE_PAIR);
   });
 
@@ -233,9 +233,9 @@ describe('Hand', () => {
       new Card(Rank.SEVEN, Suit.HEARTS),
       new Card(Rank.TWO, Suit.DIAMONDS),
     ];
-    
+
     const hand = new Hand(cards);
-    
+
     expect(hand.getHandType()).toBe(HandType.HIGH_CARD);
   });
 });

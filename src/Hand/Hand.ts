@@ -67,14 +67,48 @@ export class Hand {
     return HandType.HIGH_CARD;
   }
 
+  private isRoyalFlush(): boolean {
+    return (
+      this.isStraightFlush() && this.cards[0].rank === Rank.ACE && this.cards[4].rank === Rank.TEN
+    );
+  }
+
+  private isStraightFlush(): boolean {
+    return this.isFlush() && this.isStraight();
+  }
+
+  private isFlush(): boolean {
+    const firstSuit = this.cards[0].suit;
+    return this.cards.every(card => card.suit === firstSuit);
+  }
+
+  private isStraight(): boolean {
+    if (
+      this.cards[0].rank === Rank.ACE &&
+      this.cards[1].rank === Rank.FIVE &&
+      this.cards[2].rank === Rank.FOUR &&
+      this.cards[3].rank === Rank.THREE &&
+      this.cards[4].rank === Rank.TWO
+    ) {
+      return true;
+    }
+
+    for (let i = 1; i < this.cards.length; i++) {
+      if (this.cards[i - 1].rank !== this.cards[i].rank + 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
   // helper function to count the number of cards of each rank
   private countRanks(): Record<number, number> {
     const rankCounts: Record<number, number> = {};
-    
+
     for (const card of this.cards) {
       rankCounts[card.rank] = (rankCounts[card.rank] || 0) + 1;
     }
-    
+
     return rankCounts;
   }
 }
