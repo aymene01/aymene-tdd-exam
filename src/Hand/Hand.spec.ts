@@ -238,4 +238,26 @@ describe('Hand', () => {
 
     expect(hand.getHandType()).toBe(HandType.HIGH_CARD);
   });
+
+  it('should compare hands correctly', () => {
+    const hand1 = new Hand([
+      new Card(Rank.ACE, Suit.HEARTS),
+      new Card(Rank.KING, Suit.HEARTS),
+      new Card(Rank.QUEEN, Suit.HEARTS),
+      new Card(Rank.JACK, Suit.HEARTS),
+      new Card(Rank.TEN, Suit.HEARTS),
+    ]);
+
+    const hand2 = new Hand([
+      new Card(Rank.NINE, Suit.SPADES),
+      new Card(Rank.EIGHT, Suit.SPADES),
+      new Card(Rank.SEVEN, Suit.SPADES),
+      new Card(Rank.SIX, Suit.SPADES),
+      new Card(Rank.FIVE, Suit.SPADES),
+    ]);
+
+    expect(hand1.compareTo(hand2)).toBe(1);
+    expect(hand2.compareTo(hand1)).toBe(-1);
+  });
+  
 });

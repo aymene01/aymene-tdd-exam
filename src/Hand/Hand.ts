@@ -135,6 +135,17 @@ export class Hand {
     }), {} as RankCount);
   }
 
+  compareTo(other: Hand): number {
+    const thisHandType = this.getHandType();
+    const otherHandType = other.getHandType();
+
+    if (thisHandType !== otherHandType) {
+      return HAND_TYPE_RANKS[thisHandType] - HAND_TYPE_RANKS[otherHandType];
+    }
+
+    return 0;
+  }
+
   toString(): string {
     return this.cards.map(card => card.toString()).join(' ');
   }
