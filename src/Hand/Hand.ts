@@ -37,10 +37,44 @@ export class Hand {
   }
 
   getHandType(): HandType {
-    return HandType.ROYAL_FLUSH;
+    if (this.isRoyalFlush()) {
+      return HandType.ROYAL_FLUSH;
+    }
+    if (this.isStraightFlush()) {
+      return HandType.STRAIGHT_FLUSH;
+    }
+    if (this.isFourOfAKind()) {
+      return HandType.FOUR_OF_A_KIND;
+    }
+    if (this.isFullHouse()) {
+      return HandType.FULL_HOUSE;
+    }
+    if (this.isFlush()) {
+      return HandType.FLUSH;
+    }
+    if (this.isStraight()) {
+      return HandType.STRAIGHT;
+    }
+    if (this.isThreeOfAKind()) {
+      return HandType.THREE_OF_A_KIND;
+    }
+    if (this.isTwoPair()) {
+      return HandType.TWO_PAIR;
+    }
+    if (this.isOnePair()) {
+      return HandType.ONE_PAIR;
+    }
+    return HandType.HIGH_CARD;
   }
 
-  getRank(): Rank {
-    return this.cards[0].rank;
+  // helper function to count the number of cards of each rank
+  private countRanks(): Record<number, number> {
+    const rankCounts: Record<number, number> = {};
+    
+    for (const card of this.cards) {
+      rankCounts[card.rank] = (rankCounts[card.rank] || 0) + 1;
+    }
+    
+    return rankCounts;
   }
 }
