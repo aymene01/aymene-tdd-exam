@@ -154,4 +154,88 @@ describe('Hand', () => {
     
     expect(hand.getHandType()).toBe(HandType.HIGH_CARD);
   });
+
+  it('should identify a flush', () => {
+    const cards = [
+      new Card(Rank.ACE, Suit.CLUBS),
+      new Card(Rank.TEN, Suit.CLUBS),
+      new Card(Rank.SEVEN, Suit.CLUBS),
+      new Card(Rank.SIX, Suit.CLUBS),
+      new Card(Rank.TWO, Suit.CLUBS),
+    ];
+    
+    const hand = new Hand(cards);
+    
+    expect(hand.getHandType()).toBe(HandType.FLUSH);
+  });
+
+  it('should identify a straight', () => {
+    const cards = [
+      new Card(Rank.NINE, Suit.HEARTS),
+      new Card(Rank.EIGHT, Suit.CLUBS),
+      new Card(Rank.SEVEN, Suit.SPADES),
+      new Card(Rank.SIX, Suit.DIAMONDS),
+      new Card(Rank.FIVE, Suit.HEARTS),
+    ];
+    
+    const hand = new Hand(cards);
+    
+    expect(hand.getHandType()).toBe(HandType.STRAIGHT);
+  });
+
+  it('should identify a three of a kind', () => {
+    const cards = [
+      new Card(Rank.EIGHT, Suit.HEARTS),
+      new Card(Rank.EIGHT, Suit.DIAMONDS),
+      new Card(Rank.EIGHT, Suit.SPADES),
+      new Card(Rank.KING, Suit.CLUBS),
+      new Card(Rank.THREE, Suit.DIAMONDS),
+    ];
+    
+    const hand = new Hand(cards);
+    
+    expect(hand.getHandType()).toBe(HandType.THREE_OF_A_KIND);
+  });
+
+  it('should identify two pairs', () => {
+    const cards = [
+      new Card(Rank.JACK, Suit.HEARTS),
+      new Card(Rank.JACK, Suit.CLUBS),
+      new Card(Rank.FOUR, Suit.SPADES),
+      new Card(Rank.FOUR, Suit.HEARTS),
+      new Card(Rank.ACE, Suit.DIAMONDS),
+    ];
+    
+    const hand = new Hand(cards);
+    
+    expect(hand.getHandType()).toBe(HandType.TWO_PAIR);
+  });
+
+  it('should identify one pair', () => {
+    const cards = [
+      new Card(Rank.TEN, Suit.HEARTS),
+      new Card(Rank.TEN, Suit.CLUBS),
+      new Card(Rank.KING, Suit.SPADES),
+      new Card(Rank.FOUR, Suit.HEARTS),
+      new Card(Rank.THREE, Suit.DIAMONDS),
+    ];
+    
+    const hand = new Hand(cards);
+    
+    expect(hand.getHandType()).toBe(HandType.ONE_PAIR);
+  });
+
+  it('should identify high card', () => {
+    const cards = [
+      new Card(Rank.ACE, Suit.HEARTS),
+      new Card(Rank.QUEEN, Suit.CLUBS),
+      new Card(Rank.NINE, Suit.SPADES),
+      new Card(Rank.SEVEN, Suit.HEARTS),
+      new Card(Rank.TWO, Suit.DIAMONDS),
+    ];
+    
+    const hand = new Hand(cards);
+    
+    expect(hand.getHandType()).toBe(HandType.HIGH_CARD);
+  });
 });
