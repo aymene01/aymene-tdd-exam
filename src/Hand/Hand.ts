@@ -48,7 +48,7 @@ export class Hand {
       [() => this.isStraight(), HandType.STRAIGHT],
       [() => this.isThreeOfAKind(), HandType.THREE_OF_A_KIND],
       [() => this.isTwoPair(), HandType.TWO_PAIR],
-      [() => this.isOnePair(), HandType.ONE_PAIR]
+      [() => this.isOnePair(), HandType.ONE_PAIR],
     ];
 
     for (const [checkFn, handType] of handCheckers) {
@@ -62,9 +62,7 @@ export class Hand {
 
   private isRoyalFlush(): boolean {
     return (
-      this.isStraightFlush() && 
-      this.cards[0].rank === Rank.ACE && 
-      this.cards[4].rank === Rank.TEN
+      this.isStraightFlush() && this.cards[0].rank === Rank.ACE && this.cards[4].rank === Rank.TEN
     );
   }
 
@@ -99,8 +97,8 @@ export class Hand {
       return true;
     }
 
-    return this.cards.every((card, index) => 
-      index === 0 || this.cards[index - 1].rank === card.rank + 1
+    return this.cards.every(
+      (card, index) => index === 0 || this.cards[index - 1].rank === card.rank + 1
     );
   }
 
@@ -108,7 +106,7 @@ export class Hand {
     if (this.isFullHouse()) {
       return false;
     }
-    
+
     const rankCounts = this.countRanks();
     return Object.values(rankCounts).some(count => count === 3);
   }
@@ -123,16 +121,19 @@ export class Hand {
     if (this.isTwoPair() || this.isThreeOfAKind() || this.isFullHouse() || this.isFourOfAKind()) {
       return false;
     }
-    
+
     const rankCounts = this.countRanks();
     return Object.values(rankCounts).some(count => count === 2);
   }
 
   private countRanks(): RankCount {
-    return this.cards.reduce((counts, card) => ({
-      ...counts,
-      [card.rank]: (counts[card.rank] || 0) + 1
-    }), {} as RankCount);
+    return this.cards.reduce(
+      (counts, card) => ({
+        ...counts,
+        [card.rank]: (counts[card.rank] || 0) + 1,
+      }),
+      {} as RankCount
+    );
   }
 
   compareTo(other: Hand): number {
