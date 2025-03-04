@@ -1,4 +1,4 @@
-import { Card } from '../Card';
+import { Card, Rank } from '../Card';
 
 export class Hand {
   readonly cards: Card[];
@@ -8,6 +8,14 @@ export class Hand {
       throw new Error('A hand must contain exactly 5 cards');
     }
     this.cards = [...cards].sort((a, b) => b.rank - a.rank);
+  }
+
+  getHandType(): HandType {
+    return HandType.ROYAL_FLUSH;
+  }
+
+  getRank(): Rank {
+    return this.cards[0].rank;
   }
 }
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Card, Rank, Suit } from '../Card';
-import { Hand } from './Hand';
+import { Hand, HandType } from './Hand';
 
 describe('Hand', () => {
   it('should create a hand with 5 cards', () => {
@@ -27,5 +27,19 @@ describe('Hand', () => {
     ];
     
     expect(() => new Hand(cards)).toThrow('A hand must contain exactly 5 cards');
+  });
+
+  it('should identify a royal flush', () => {
+    const cards = [
+      new Card(Rank.ACE, Suit.HEARTS),
+      new Card(Rank.KING, Suit.HEARTS),
+      new Card(Rank.QUEEN, Suit.HEARTS),
+      new Card(Rank.JACK, Suit.HEARTS),
+      new Card(Rank.TEN, Suit.HEARTS),
+    ];
+    
+    const hand = new Hand(cards);
+    
+    expect(hand.getHandType()).toBe(HandType.ROYAL_FLUSH);
   });
 });
