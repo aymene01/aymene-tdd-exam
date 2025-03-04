@@ -24,10 +24,8 @@ describe('Game', () => {
     const game = new Game();
     const result = game.evaluateWinner(hand1, hand2);
 
-    expect(true).toBe(true);
-
-    // expect(result.winningHandIndex).toBe(0);
-    // expect(result.winningHandType).toBe(HandType.ROYAL_FLUSH);
-    // expect(result.losingHandType).toBe(HandType.STRAIGHT_FLUSH);
+    expect(result.winningHandIndex).toBe(0);
+    expect(result.winningHandType).toBe(HandType.ROYAL_FLUSH);
+    expect(result.losingHandType).toBe(HandType.STRAIGHT_FLUSH);
   });
 });
